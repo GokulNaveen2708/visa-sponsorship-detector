@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="assets/banner.png" alt="Visa Sponsorship Detector" width="700"/>
-</p>
 
 <h1 align="center">🛡️ Visa Sponsorship Detector</h1>
 
@@ -42,9 +39,7 @@ The extension runs **entirely in your browser** — no servers, no API calls, no
 3. **Extracts the tech stack** from the JD so you can quickly see if your skills match
 4. **Shows a vibrant floating badge** with the verdict in under 150ms
 
-<p align="center">
-  <img src="assets/badges.png" alt="Status Badges" width="500"/>
-</p>
+
 
 | Badge | Meaning |
 |---|---|
@@ -54,9 +49,6 @@ The extension runs **entirely in your browser** — no servers, no API calls, no
 
 **Click the badge** to expand into a detail panel:
 
-<p align="center">
-  <img src="assets/panel.png" alt="Expanded Panel" width="350"/>
-</p>
 
 - Job title, company, posted date with freshness indicator (🔥 Hot / 🟠 Warm / 🧊 Cold)
 - **Tech Stack** — keywords extracted from the JD as colored tags
@@ -203,7 +195,7 @@ This project was born from frustration and built with love. If you're an interna
 
 ## 📄 License
 
-MIT — use it, fork it, make it yours.
+ use it, fork it, make it yours.
 
 ---
 
