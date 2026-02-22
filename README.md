@@ -138,7 +138,7 @@ A local dictionary of **~160 tech terms** (languages, frameworks, databases, clo
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/your-username/VisSponsorship.git
+   git clone https://github.com/GokulNaveen2708/visa-sponsorship-detector.git
    ```
 2. **Open Chrome** → navigate to `chrome://extensions`
 3. **Enable Developer Mode** (toggle in top-right)
