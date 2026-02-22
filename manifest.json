@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "Visa Sponsorship Detector",
+  "version": "0.3",
+  "description": "Instantly detect visa sponsorship status on job listings.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/jobs/*",
+    "https://linkedin.com/jobs/*",
+    "https://www.indeed.com/*",
+    "https://indeed.com/*",
+    "https://boards.greenhouse.io/*",
+    "https://*.greenhouse.io/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.linkedin.com/jobs/*",
+        "https://linkedin.com/jobs/*",
+        "https://www.indeed.com/*",
+        "https://indeed.com/*",
+        "https://boards.greenhouse.io/*",
+        "https://*.greenhouse.io/*"
+      ],
+      "js": [
+        "src/utils.js",
+        "src/meta.js",
+        "src/sponsors.js",
+        "src/detector.js",
+        "src/keywords.js",
+        "src/ui.js",
+        "src/observer.js",
+        "src/inject.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Scan job for visa sponsorship"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}
