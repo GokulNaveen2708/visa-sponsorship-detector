@@ -43,9 +43,21 @@
       'no visa', 'unable to sponsor', 'not able to sponsor'
     ];
     const requirementPhrases = [
-      'must be a us citizen', 'us citizen', 'only us citizens',
-      'permanent resident', 'green card holder', 'security clearance required',
-      'must be authorized to work in the united states without sponsorship'
+      'must be a us citizen', 'us citizen', 'us citizenship',
+      'u.s. citizen', 'u.s. citizenship',
+      'united states citizen', 'must be a united states citizen',
+      'citizen of the united states',
+      'only us citizens', 'only u.s. citizens',
+      'permanent resident', 'green card holder',
+      'security clearance required', 'security clearance',
+      'clearance required', 'top secret clearance',
+      'ts/sci', 'secret clearance',
+      'must be authorized to work in the united states without sponsorship',
+      'authorized to work in the united states',
+      'legally authorized to work in the u.s',
+      'legally authorized to work in the united states',
+      'work authorization required',
+      'us work authorization', 'u.s. work authorization'
     ];
 
     const posRegexes = u.buildRegexesFromPhrases(allPositive);
