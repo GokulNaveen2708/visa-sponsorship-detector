@@ -31,8 +31,8 @@
   ns.detector.detectVisaSponsorship = function (fullJDText) {
     const positivePhrases = [
       'visa sponsorship', 'will sponsor', 'can sponsor', 'sponsorship available',
-      'we can sponsor', 'we will sponsor', 'sponsorship provided',
-      'h-1b', 'h1b', 'work visa', 'work permit', 'h1b sponsorship'
+      'we can sponsor', 'we will sponsor', 'sponsorship provided', 'sponsorship may be available',
+      'h-1b', 'h1b', 'work visa', 'work permit', 'h1b sponsorship', 'immigration sponsorship'
     ];
     // merge user extra keywords
     const allPositive = positivePhrases.concat(_extraPositive);
@@ -137,14 +137,26 @@
     return { status: 'unknown', reason: 'no-match', snippet: rawTrimmed.slice(0, 400) };
   };
 
-  // small context checker
+  // small context checker — tightly bound to prevent catching unrelated words in other sentences
   ns.detector.contextHasNegation = function (normalizedText, matchIndex, matchLen) {
-    const radius = 120;
-    const start = Math.max(0, matchIndex - radius);
-    const end = Math.min(normalizedText.length, matchIndex + matchLen + radius);
-    const ctx = normalizedText.slice(start, end);
-    const req = /\b(must be|must have|security clearance|required|active secret|only (us|u\.s\.) citizens|us citizen|permanent resident|green card holder|must be authorized to work in the united states without sponsorship)\b/;
+    const radius = 45; // reduced from 120 to prevent false negatives from adjacent sentences
+
+    // Grab surrounding text, but cut off at sentence boundaries (.!?) to stay in-context
+    const rawBefore = normalizedText.slice(Math.max(0, matchIndex - radius), matchIndex);
+    const rawAfter = normalizedText.slice(matchIndex + matchLen, Math.min(normalizedText.length, matchIndex + matchLen + radius));
+
+    // Split by sentence terminators taking the part closest to the match
+    const beforeParts = rawBefore.split(/[.?!↵\n]+/);
+    const beforeCtx = beforeParts[beforeParts.length - 1]; // last segment before match
+
+    const afterParts = rawAfter.split(/[.?!↵\n]+/);
+    const afterCtx = afterParts[0]; // first segment after match
+
+    const ctx = beforeCtx + ' [MATCH] ' + afterCtx;
+
+    const req = /\b(security clearance|active secret|only (us|u\.s\.) citizens|us citizen|us citizenship|permanent resident|green card holder|must be authorized to work in the united states without sponsorship)\b/;
     const neg = /\b(no|without|not|does not|doesn't|will not|won't|unable|not able|cannot|can't|no sponsorship|no visa|not eligible|not eligible for sponsorship)\b/;
+
     if (req.test(ctx)) return { kind: 'requirement', ctx };
     if (neg.test(ctx)) return { kind: 'negation', ctx };
     return null;
