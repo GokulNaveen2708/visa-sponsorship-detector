@@ -40,7 +40,11 @@
     const negativePhrases = [
       'without sponsorship', 'no sponsorship', 'no visa sponsorship',
       'will not sponsor', 'does not sponsor', 'not eligible for sponsorship',
-      'no visa', 'unable to sponsor', 'not able to sponsor'
+      'no visa', 'unable to sponsor', 'not able to sponsor',
+      'does not provide sponsorship', 'do not provide sponsorship',
+      'not provide sponsorship', 'does not offer sponsorship',
+      'do not offer sponsorship', 'not offer sponsorship',
+      'will not provide sponsorship', 'will not offer sponsorship'
     ];
     const requirementPhrases = [
       'must be a us citizen', 'us citizen', 'us citizenship',
@@ -57,7 +61,9 @@
       'legally authorized to work in the u.s',
       'legally authorized to work in the united states',
       'work authorization required',
-      'us work authorization', 'u.s. work authorization'
+      'us work authorization', 'u.s. work authorization',
+      'authorized to be employed', 'legally authorized to be employed',
+      'eligible for employment'
     ];
 
     const posRegexes = u.buildRegexesFromPhrases(allPositive);
