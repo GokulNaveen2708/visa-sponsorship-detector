@@ -54,7 +54,7 @@ async function runTests() {
         const topLabel = result.labels[0];
         const topScore = result.scores[0];
 
-        let aiResult = 'unknown';
+        let aiResult = 'ambiguous';
         // Lowered threshold slightly because zero-shot models can be less confident on short texts
         if (topLabel === 'we provide visa sponsorship' && topScore > 0.55) {
             aiResult = 'yes';
@@ -76,8 +76,8 @@ async function runTests() {
 
 function expectedMatches(expected, actual, topLabel, topScore) {
     if (expected === actual) return true;
-    // Allow 'unknown' as a pass if it's an ambiguous tricky case and the model was unsure
-    if (expected === 'unknown' && actual === 'unknown') return true;
+    // Allow 'unknown'/'ambiguous' cross-matching for tricky edge cases
+    if ((expected === 'unknown' || expected === 'ambiguous') && (actual === 'unknown' || actual === 'ambiguous')) return true;
     return false;
 }
 

@@ -58,7 +58,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     sendResponse({ status: 'no', reason: 'ai-negative', match: 'AI inferred no sponsorship' });
                 } else {
                     // Model is too unsure
-                    sendResponse({ status: 'unknown', reason: 'ai-unsure', match: `Confidence too low (${topScore.toFixed(2)})` });
+                    sendResponse({ status: 'ambiguous', reason: 'ai-unsure', match: `Confidence too low (${topScore.toFixed(2)})` });
                 }
 
             } catch (err) {

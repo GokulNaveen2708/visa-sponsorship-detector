@@ -99,7 +99,7 @@
 
         // Known-sponsor check: if JD doesn't mention sponsorship, check if company is a known sponsor
         const sponsorsModule = VD.sponsors || null;
-        if (res.status === 'unknown' && sponsorsModule && typeof sponsorsModule.check === 'function') {
+        if ((res.status === 'unknown' || res.status === 'ambiguous') && sponsorsModule && typeof sponsorsModule.check === 'function') {
           try {
             const sponsorCheck = sponsorsModule.check(meta.company);
             if (sponsorCheck.isKnown) {

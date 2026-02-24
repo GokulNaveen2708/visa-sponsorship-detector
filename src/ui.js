@@ -33,6 +33,14 @@
       textColor: '#fff',
       borderColor: 'rgba(124,77,255,0.5)'
     },
+    ambiguous: {
+      label: 'Ambiguous',
+      icon: '🤔',
+      gradient: 'linear-gradient(135deg, #ff8a65, #d84315)',
+      glow: '0 0 20px rgba(216,67,21,0.4), 0 0 40px rgba(216,67,21,0.1)',
+      textColor: '#fff',
+      borderColor: 'rgba(216,67,21,0.5)'
+    },
     loading: {
       label: 'AI Analyzing...',
       icon: '⏳',
