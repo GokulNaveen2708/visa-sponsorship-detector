@@ -140,6 +140,39 @@
       }
     }
 
+    // No hard matches found. Look for ambiguous terms that the AI could verify.
+    const ambiguousRegex = /\b(sponsor|sponsorship|visa|h1b|h-1b)\b/i;
+    const aiMatch = ambiguousRegex.exec(rawTrimmed);
+    if (aiMatch) {
+      const idx = aiMatch.index;
+      const radius = 250; // Grab a wide chunk to find sentence boundaries
+      const start = Math.max(0, idx - radius);
+      const end = Math.min(rawTrimmed.length, idx + aiMatch[0].length + radius);
+      const ctx = rawTrimmed.slice(start, end);
+
+      // Snap to sentence boundaries
+      const matchPosInCtx = idx - start;
+      const before = ctx.slice(0, matchPosInCtx);
+      const after = ctx.slice(matchPosInCtx + aiMatch[0].length);
+
+      const beforeParts = before.split(/[.?!↵\n]+/);
+      const afterParts = after.split(/[.?!↵\n]+/);
+
+      const beforeStr = beforeParts[beforeParts.length - 1];
+      const afterStr = afterParts[0];
+
+      const cleanSentence = (beforeStr + aiMatch[0] + afterStr).trim();
+
+      if (cleanSentence.length > 20) {
+        return {
+          status: 'ambiguous',
+          reason: 'ai-request',
+          sentence: cleanSentence,
+          snippet: rawTrimmed.slice(0, 300)
+        };
+      }
+    }
+
     return { status: 'unknown', reason: 'no-match', snippet: rawTrimmed.slice(0, 400) };
   };
 

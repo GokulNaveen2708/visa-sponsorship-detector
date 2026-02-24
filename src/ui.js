@@ -32,6 +32,14 @@
       glow: '0 0 20px rgba(124,77,255,0.4), 0 0 40px rgba(124,77,255,0.1)',
       textColor: '#fff',
       borderColor: 'rgba(124,77,255,0.5)'
+    },
+    loading: {
+      label: 'AI Analyzing...',
+      icon: '⏳',
+      gradient: 'linear-gradient(135deg, #ffb74d, #f57c00)',
+      glow: '0 0 20px rgba(255,152,0,0.5), 0 0 40px rgba(255,183,77,0.2)',
+      textColor: '#2c1400',
+      borderColor: 'rgba(255,152,0,0.6)'
     }
   };
 

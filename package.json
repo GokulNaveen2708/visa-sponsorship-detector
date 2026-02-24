@@ -1,0 +1,27 @@
+{
+  "name": "vissponsorship",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">🛡️ Visa Sponsorship Detector</h1>",
+  "main": "background.js",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GokulNaveen2708/visa-sponsorship-detector.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GokulNaveen2708/visa-sponsorship-detector/issues"
+  },
+  "homepage": "https://github.com/GokulNaveen2708/visa-sponsorship-detector#readme",
+  "dependencies": {
+    "@xenova/transformers": "^2.17.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.3"
+  }
+}

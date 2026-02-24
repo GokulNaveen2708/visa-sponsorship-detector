@@ -122,6 +122,49 @@
           }
         } catch (e) { console.warn('[VisaDetector] keyword extraction failed', e); }
 
+        // Handle AI hybrid path for ambiguous sentences
+        if (res.status === 'ambiguous' && res.sentence) {
+          console.debug('[VisaDetector] Found ambiguous sentence for AI:', res.sentence);
+
+          // 1. Instantly show a loading UI
+          const loadingRes = { ...res, status: 'loading', reason: 'ai-analyzing' };
+          try {
+            if (ui && typeof ui.createOrUpdateSidebar === 'function') {
+              ui.createOrUpdateSidebar(Object.assign({}, loadingRes, { meta, techKeywords }));
+            }
+          } catch (e) { }
+
+          // 2. Message the background worker for AI inference
+          chrome.runtime.sendMessage(
+            { type: 'ANALYZE_SENTENCE', sentence: res.sentence },
+            (response) => {
+              if (chrome.runtime.lastError || !response) {
+                console.error('[VisaDetector] AI messaging failed', chrome.runtime.lastError);
+                response = { status: 'unknown', reason: 'ai-error', match: 'AI failed to respond' };
+              }
+
+              const finalRes = { ...res, ...response };
+              finalRes.snippet = res.snippet || res.sentence;
+
+              if (resultCache.size > CACHE_MAX) {
+                const firstKey = resultCache.keys().next().value;
+                resultCache.delete(firstKey);
+              }
+              resultCache.set(currentJobUID, { res: finalRes, meta, techKeywords });
+
+              try {
+                if (ui && typeof ui.createOrUpdateSidebar === 'function') {
+                  ui.createOrUpdateSidebar(Object.assign({}, finalRes, { meta, techKeywords }));
+                }
+              } catch (e) { }
+            }
+          );
+
+          return; // The async callback handles caching and the final UI update
+        }
+
+        // --- Normal Flow ---
+
         // cache the result
         if (resultCache.size > CACHE_MAX) {
           const firstKey = resultCache.keys().next().value;
