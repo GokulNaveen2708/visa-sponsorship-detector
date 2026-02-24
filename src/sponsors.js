@@ -110,8 +110,18 @@
 
         for (const entry of compiled) {
             for (const variant of entry.variants) {
-                if (normalized === variant || normalized.includes(variant) || variant.includes(normalized)) {
+                // Strict equality first
+                if (normalized === variant) {
                     return { isKnown: true, matchedName: entry.display };
+                }
+
+                // If the user's extracted company name is a multi-word string that 
+                // contains the known sponsor as an exact word boundary (e.g., "Google Inc US" contains "google")
+                if (normalized.length > variant.length) {
+                    const regex = new RegExp(`\\b${variant}\\b`, 'i');
+                    if (regex.test(normalized)) {
+                        return { isKnown: true, matchedName: entry.display };
+                    }
                 }
             }
         }
