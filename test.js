@@ -46,7 +46,10 @@ async function runTests() {
 
     for (const tc of testCases) {
         console.log(`\nTesting: "${tc.sentence}"`);
+
+        console.time('inference_time');
         const result = await classifier(tc.sentence, candidateLabels, { multi_label: false });
+        console.timeEnd('inference_time');
 
         const topLabel = result.labels[0];
         const topScore = result.scores[0];
