@@ -36,10 +36,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             try {
                 const classifier = await initializeModel();
 
-                // Define our candidate labels
+                // Define our refined candidate labels
                 const candidateLabels = [
-                    'offers visa sponsorship',
-                    'does not offer visa sponsorship or requires citizenship'
+                    'we provide visa sponsorship',
+                    'we do not provide visa sponsorship'
                 ];
 
                 // Run the text through the zero-shot classifier
@@ -51,9 +51,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
                 console.debug(`[VisaDetector][Background] Analysis of: "${sentence}" -> ${topLabel} (${(topScore * 100).toFixed(1)}%)`);
 
-                if (topLabel === 'offers visa sponsorship' && topScore > 0.6) {
+                // Use slightly lower threshold (0.55) as zero-shot models can be less confident 
+                if (topLabel === 'we provide visa sponsorship' && topScore > 0.55) {
                     sendResponse({ status: 'yes', reason: 'ai-positive', match: 'AI inferred sponsorship' });
-                } else if (topLabel === 'does not offer visa sponsorship or requires citizenship' && topScore > 0.6) {
+                } else if (topLabel === 'we do not provide visa sponsorship' && topScore > 0.55) {
                     sendResponse({ status: 'no', reason: 'ai-negative', match: 'AI inferred no sponsorship' });
                 } else {
                     // Model is too unsure
