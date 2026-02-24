@@ -3,6 +3,7 @@ import { pipeline, env } from '@xenova/transformers';
 // Skip local weight checks to avoid CORS/filesystem errors in Chrome extension
 env.allowLocalModels = false;
 env.useBrowserCache = true; // Use IndexedDB to cache models, saves re-downloading!
+env.backends.onnx.wasm.numThreads = 1; // Disable Web Workers for ONNX Runtime (required for MV3 service workers)
 
 // Maintain a single pipeline instance
 let classifierPromise = null;
